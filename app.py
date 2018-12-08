@@ -49,8 +49,8 @@ def format_post_data(data, hs_cookie):
 
     strError = "No Error"
 
-    post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, pageTitle, pageUrl, strError)
-    var_list = [portalId, formGUID, values_dict, hutk, ipAddress, pageTitle, pageUrl, strError ]
+    post_data = post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, pageTitle, pageUrl, strError)
+    var_list = [portalId, formGUID, values_dict, hutk, ipAddress, pageTitle, pageUrl, strError, post_data ]
     return var_list
 
 
@@ -68,7 +68,12 @@ def post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, p
 
     postData = ""
 
-    return
+    for key, value in values_dict.items():
+        postData += key + "=" + value + "&"
+
+    postData += "hs_context=" + hsContextJSON
+
+    return postData
 
 def get_api_key():
     api_key = "242d0749-2269-4dbb-a27d-f4024de96dab"

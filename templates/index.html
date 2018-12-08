@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+    <head>
+        <title>
+            Advocate Form
+        </title>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/base-min.css">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- <script src="/static/scripts.js"></script> -->
+    </head>
+    <body>
+        <h1>Dev Advocate Exercise Form</h1>
+          <form class="pure-form pure-form-aligned" action="{{ url_for('submit') }}" method="POST">
+                <fieldset>
+                    <div class="pure-control-group">
+                        <label for="firstname">First Name</label>
+                        <input id="firstname" type="text" placeholder="First Name" name="firstname">
+                        <span class="pure-form-message-inline">This is a required field.</span>
+                    </div>
+            
+                    <div class="pure-control-group">
+                        <label for="lastname">Last Name</label>
+                        <input id="lastname" type="text" placeholder="Last Name" name="lastname">
+                        <span class="pure-form-message-inline">This is a required field.</span>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="email">Email Address</label>
+                        <input id="email" type="email" placeholder="Email Address" name="email">
+                        <span class="pure-form-message-inline">This is a required field.</span>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="applying_for_position">Which position are you applying to?</label>
+                        <select name="applying_for_position" required="" id="applying_for_position">
+                            <option value="">--</option>
+                            <option value="implementation">Implementation Specialist</option>
+                            <option value="advocate">Developer Advocate</option>
+                            <option value="devsupport">Developer Support Specialist</option>
+                            <option value="techconsultant">Technical Consultant</option>
+                        </select>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="role_interest_description">Briefly tell us why you're interested in the role</label>
+                        <textarea cols="20" name="role_interest_description" rows="10" placeholder="What appeals to me about this position...">
+                        </textarea>
+                    </div>
+                    <div class="pure-controls">
+                        <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                    </div>
+                </fieldset>
+            </form>
+            
+
+            <!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5222232.js"></script>
+<!-- End of HubSpot Embed Code -->
+    </body>
+</html>

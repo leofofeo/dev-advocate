@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>
+            Advocate Form
+        </title>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/base-min.css">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                <!-- <script src="/static/scripts.js"></script> -->
+    </head>
+    <body>
+        <div class="pure-controls">
+            <a href="/">
+                Back to form
+            </a>
+        </div>
+        <div style="margin-top: 100px;">
+            <div>
+                Name: {{ info.get('firstname', '') }}
+            </div>
+            <div>
+                Last Name: {{ info.get('lastname', '')}}
+            </div>
+            <div>
+                Email: {{ info.get('email', '')}}
+            </div>
+            <div>
+                Position: {{ info.get('applying_for_position', '')}}
+            </div>
+            <div>
+                Description: {{ info.get('role_interest_description', '')}}
+            </div>
+            <div>
+                HubSpot Cookie: {{ hs_cookie }}
+            </div>
+        </div>
+        <div>
+            <div>
+                <h1>From "format_post_data()"</h1>
+            </div>
+            <div>
+                Portal Id: {{ data[0] }}
+            </div>
+            <div>
+                Form Guid: {{ data[1] }}
+            </div>
+            <div>
+                First Name: {{ data[2]['firstname'] }}
+            </div>
+            <div>
+                Last Name: {{ data[2]['lastname'] }}
+            </div>
+            <div>
+                Email: {{ data[2]['email'] }}
+            </div>
+            <div>
+                Position: {{ data[2]['position']}}
+            </div>
+            <div>
+                Description: {{ data[2]['description']}}
+            </div>
+            <div>
+                HS Cookie: {{ data[3] }}
+            </div>
+            <div>
+                IP Address: {{ data[4] }}
+            </div>
+            <div>
+                Page Title: {{ data[5] }}
+            </div>
+            <div>
+                Page URL: {{ data[6] }}
+            </div>
+            <div>
+                String Error: {{ data[7] }}
+            </div>
+        </div>
+    </body>
+</html>

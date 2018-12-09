@@ -65,15 +65,11 @@ def post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, p
         "pageName" : pageTitle
     }
 
-    # hsContextEncoded = urllib.parse.urlencode(hsContext)
-    # hsContextJson = json.dumps(hsContext)
-
-    hsContextString = "hutk:" + hsContext['hutk'] + "ipAddress:" + hsContext['ipAddress'] + "pageUrl:" + hsContext['pageUrl'] + "pageName:" + hsContext['pageName']
-    hsContextEncoded = urllib.parse.quote_plus(hsContextString)
+    hsContextJson = json.dumps(hsContext)
 
     postData = urllib.parse.urlencode(values_dict)
 
-    postData += "&hs_context=" + hsContextEncoded 
+    postData += "&hs_context=" + hsContextJson 
 
     headers = {'Content-Type' : 'application/x-www-form-urlencoded'}
 

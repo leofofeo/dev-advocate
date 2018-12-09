@@ -1,5 +1,6 @@
 import json
 import requests
+import urllib
 from flask import (Flask, render_template, redirect, 
                     url_for, request, make_response, jsonify)
 
@@ -31,8 +32,8 @@ def format_post_data(data, hs_cookie):
         "firstname" : firstname,
         "lastname" : lastname,
         "email" : email,
-        "position" : position,
-        "description" : description
+        "applying_for_position" : position,
+        "role_interest_description" : description
     }
     
     # form variables
@@ -49,13 +50,13 @@ def format_post_data(data, hs_cookie):
 
     strError = "No Error"
 
-    post_data = post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, pageTitle, pageUrl, strError)
-    var_list = [portalId, formGUID, values_dict, hutk, ipAddress, pageTitle, pageUrl, strError, post_data ]
+    post_data, post_response = post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, pageTitle, pageUrl, strError)
+    var_list = [portalId, formGUID, values_dict, hutk, ipAddress, pageTitle, pageUrl, strError, post_data, post_response ]
     return var_list
 
 
 def post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, pageTitle, pageUrl, strMessage):
-    api_key = get_api_key()
+    # api_key = get_api_key()
     endPointUrl = "https://forms.hubspot.com/uploads/form/v2/{}/{}".format(portalId, formGUID)
     hsContext = {
         "hutk" : hutk,
@@ -64,16 +65,20 @@ def post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, p
         "pageName" : pageTitle
     }
 
-    hsContextJSON = json.dumps(hsContext)
+    # hsContextEncoded = urllib.parse.urlencode(hsContext)
+    # hsContextJson = json.dumps(hsContext)
 
-    postData = ""
+    hsContextString = "hutk:" + hsContext['hutk'] + "ipAddress:" + hsContext['ipAddress'] + "pageUrl:" + hsContext['pageUrl'] + "pageName:" + hsContext['pageName']
+    hsContextEncoded = urllib.parse.quote_plus(hsContextString)
 
-    for key, value in values_dict.items():
-        postData += key + "=" + value + "&"
+    postData = urllib.parse.urlencode(values_dict)
 
-    postData += "hs_context=" + hsContextJSON
+    postData += "&hs_context=" + hsContextEncoded 
 
-    return postData
+    headers = {'Content-Type' : 'application/x-www-form-urlencoded'}
+
+    r = requests.post(endPointUrl, data=postData, headers=headers)
+    return postData, r.status_code
 
 def get_api_key():
     api_key = "242d0749-2269-4dbb-a27d-f4024de96dab"
@@ -92,7 +97,7 @@ def submit():
     hs_cookie = get_hs_cookie()
     data.update(dict(request.form.items()))
     response.set_cookie('character', json.dumps(data))
-    format_post_data(data, hs_cookie)
+    # format_post_data(data, hs_cookie)
     return response
 
 @app.route('/info')

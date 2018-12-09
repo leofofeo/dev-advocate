@@ -2,6 +2,7 @@ import json
 import requests
 import urllib
 import time
+import calendar
 from datetime import datetime
 from flask import (Flask, render_template, redirect, 
                     url_for, request, make_response, jsonify)
@@ -79,10 +80,11 @@ def post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, p
 
         fields_list.append(field_value_dict)
 
-    submission_date = datetime.utcnow()
-    submission_time = int(round(submission_date.timestamp() * 1000))
+    # keep an eye on this timestamp, been getting some wonky results
+    timestamp = int(datetime.utcnow().timestamp()) * 1000
+
     submission_dict = {
-        "submittedAt" : "",
+        "submittedAt" : timestamp,
         "fields" : fields_list,
         "context" : hsContext
     }

@@ -56,22 +56,41 @@ def format_post_data(data, hs_cookie):
 
 
 def post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, pageTitle, pageUrl, strMessage):
-    # api_key = get_api_key()
-    endPointUrl = "https://forms.hubspot.com/uploads/form/v2/{}/{}".format(portalId, formGUID)
+    
+    endPointUrl = "https://api.hsforms.com/submissions/v3/integration/submit/{}/{}".format(portalId, formGUID)
+    # old endpoint
+    # endPointUrl = "https://forms.hubspot.com/uploads/form/v2/{}/{}".format(portalId, formGUID)
     hsContext = {
         "hutk" : hutk,
         "ipAddress" : ipAddress,
-        "pageUrl" : pageUrl,
+        "pageUri" : pageUrl,
         "pageName" : pageTitle
     }
 
-    hsContextJson = json.dumps(hsContext)
+    fields_list = []
 
-    postData = urllib.parse.urlencode(values_dict)
+    for key, value in values_dict.items():
+        field_value_dict = {
+            "name" : key,
+            "value" : value
+        }
 
-    postData += "&hs_context=" + hsContextJson 
+        fields_list.append(field_value_dict)
 
-    headers = {'Content-Type' : 'application/x-www-form-urlencoded'}
+    submission_dict = {
+        "submittedAt" : "",
+        "fields" : fields_list,
+        "context" : hsContext
+    }
+
+    postData = json.dumps(submission_dict)
+
+    # This is code used for the old API, when it was form-encoded
+    # hsContextJson = json.dumps(hsContext)
+    # postData = urllib.parse.urlencode(values_dict)
+    # postData += "&hs_context=" + hsContextJson 
+
+    headers = {'Content-Type' : 'application/json'}
 
     r = requests.post(endPointUrl, data=postData, headers=headers)
     return postData, r.status_code

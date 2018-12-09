@@ -90,10 +90,8 @@ def index():
 def submit():
     response = make_response(redirect(url_for('info')))
     data = get_submit_data()
-    hs_cookie = get_hs_cookie()
     data.update(dict(request.form.items()))
     response.set_cookie('character', json.dumps(data))
-    # format_post_data(data, hs_cookie)
     return response
 
 @app.route('/info')

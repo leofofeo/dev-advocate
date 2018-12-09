@@ -92,8 +92,13 @@ def post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, p
 
     headers = {'Content-Type' : 'application/json'}
 
-    r = requests.post(endPointUrl, data=postData, headers=headers)
-    return postData, r.status_code
+    try:
+        r = requests.post(endPointUrl, data=postData, headers=headers)
+        return postData, r.status_code
+    except Exception as e:
+        r = str(e)
+        return postData, r
+     
 
 def get_api_key():
     api_key = "242d0749-2269-4dbb-a27d-f4024de96dab"
@@ -120,4 +125,4 @@ def info():
     data = format_post_data(info, hs_cookie)
     return render_template('info.html', info=info, hs_cookie=hs_cookie, data=data)
 
-# app.run(debug=True, port=8000, host="0.0.0.0")
+app.run(debug=True, port=8000, host="0.0.0.0")

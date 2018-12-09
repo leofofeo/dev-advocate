@@ -1,6 +1,8 @@
 import json
 import requests
 import urllib
+import time
+from datetime import datetime
 from flask import (Flask, render_template, redirect, 
                     url_for, request, make_response, jsonify)
 
@@ -77,6 +79,8 @@ def post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, p
 
         fields_list.append(field_value_dict)
 
+    submission_date = datetime.utcnow()
+    submission_time = int(round(submission_date.timestamp() * 1000))
     submission_dict = {
         "submittedAt" : "",
         "fields" : fields_list,
@@ -94,7 +98,12 @@ def post_to_hubspot_formsAPI(portalId, formGUID, values_dict, hutk, ipAddress, p
 
     try:
         r = requests.post(endPointUrl, data=postData, headers=headers)
-        return postData, r.status_code
+        status_info = ""
+        if r.status_code == 200:
+            status_info = r.status_code
+        else:
+            status_info = r.text
+        return postData, status_info
     except Exception as e:
         r = str(e)
         return postData, r

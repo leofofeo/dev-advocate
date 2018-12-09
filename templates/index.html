@@ -16,23 +16,23 @@
                 <fieldset>
                     <div class="pure-control-group">
                         <label for="firstname">First Name</label>
-                        <input id="firstname" type="text" placeholder="First Name" name="firstname">
+                        <input id="firstname" type="text" placeholder="First Name" name="firstname" required="true">
                         <span class="pure-form-message-inline">This is a required field.</span>
                     </div>
             
                     <div class="pure-control-group">
                         <label for="lastname">Last Name</label>
-                        <input id="lastname" type="text" placeholder="Last Name" name="lastname">
+                        <input id="lastname" type="text" placeholder="Last Name" name="lastname" required="true">
                         <span class="pure-form-message-inline">This is a required field.</span>
                     </div>
                     <div class="pure-control-group">
                         <label for="email">Email Address</label>
-                        <input id="email" type="email" placeholder="Email Address" name="email">
+                        <input id="email" type="email" placeholder="Email Address" name="email" required="true">
                         <span class="pure-form-message-inline">This is a required field.</span>
                     </div>
                     <div class="pure-control-group">
                         <label for="applying_for_position">Which position are you applying to?</label>
-                        <select name="applying_for_position" required="" id="applying_for_position">
+                        <select name="applying_for_position" id="applying_for_position">
                             <option value="">--</option>
                             <option value="implementation">Implementation Specialist</option>
                             <option value="advocate">Developer Advocate</option>
@@ -42,8 +42,7 @@
                     </div>
                     <div class="pure-control-group">
                         <label for="role_interest_description">Briefly tell us why you're interested in the role</label>
-                        <textarea cols="20" name="role_interest_description" rows="10" placeholder="What appeals to me about this position...">
-                        </textarea>
+                        <textarea cols="20" name="role_interest_description" rows="10" placeholder="What appeals to me about this position..."></textarea>
                     </div>
                     <div class="pure-controls">
                         <button type="submit" class="pure-button pure-button-primary">Submit</button>
